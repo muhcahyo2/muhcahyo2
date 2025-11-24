@@ -2,7 +2,7 @@ import { ContextBuilder } from '../../../utils/ai/context'
 import { useAI } from '../../../utils/ai/factory'
 import { getProfileFacts } from '../../../utils/ai-repository'
 
-export default defineEventHandler(async (event) => {
+export default defineCachedEventHandler(async (event) => {
     const section = getRouterParam(event, 'section')
 
     if (!section) {
@@ -39,4 +39,7 @@ Do not include the heading, just the content.
             statusMessage: `Failed to generate profile content: ${error.message}`
         })
     }
+}, {
+    maxAge: 60 * 60 * 24, // Cache for 24 hours
+    getKey: (event) => `ai-profile-${getRouterParam(event, 'section')}`
 })

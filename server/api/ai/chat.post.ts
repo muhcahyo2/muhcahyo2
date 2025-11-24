@@ -1,6 +1,7 @@
 import { ContextBuilder } from '../../utils/ai/context'
 import { useAI } from '../../utils/ai/factory'
 import { addMessage } from '../../utils/ai-repository'
+import { isRateLimited } from '../../utils/rate-limit'
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
@@ -10,6 +11,14 @@ export default defineEventHandler(async (event) => {
         throw createError({
             statusCode: 400,
             statusMessage: 'Message and sessionId are required'
+        })
+    }
+
+    // Rate limiting (10 requests per minute per session)
+    if (isRateLimited(sessionId, { limit: 10, windowMs: 60000 })) {
+        throw createError({
+            statusCode: 429,
+            statusMessage: 'Too many requests. Please try again later.'
         })
     }
 

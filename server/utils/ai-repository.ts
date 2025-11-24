@@ -1,3 +1,5 @@
+import { useDb } from './db'
+
 export interface ProfileFact {
     id: number
     category: string

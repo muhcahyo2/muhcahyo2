@@ -1,6 +1,8 @@
 # Nuxt Minimal Starter
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Documentation
+- [AI Features & Configuration](docs/ai-features.md)
+- [Nuxt 4 Documentation](https://nuxt.com/docs)
 
 ## Setup
 
