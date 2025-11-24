@@ -34,8 +34,6 @@ Instructions:
 
     static async enrichUserQuery(query: string, sessionId: string): Promise<Message[]> {
         const history = getConversationHistory(sessionId)
-        const facts = getProfileFacts()
-        const systemPrompt = this.buildSystemPrompt(facts)
 
         // Convert history to AI Message format
         // Note: history is already in chronological order from getConversationHistory
@@ -45,7 +43,6 @@ Instructions:
         }))
 
         return [
-            { role: 'system', content: systemPrompt },
             ...historyMessages,
             { role: 'user', content: query }
         ]

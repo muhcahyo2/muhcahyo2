@@ -1,4 +1,4 @@
-import type { AIProvider, Message, ChatOptions, AIResponse, AIChunk } from '../types'
+import type { AIProvider, Message, ChatOptions, AIResponse, AIChunk, GeminiMessage, GeminiRequest } from '../types'
 
 export class GeminiProvider implements AIProvider {
     private apiKey: string
@@ -54,14 +54,10 @@ export class GeminiProvider implements AIProvider {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                contents: this.formatMessages(messages, options?.systemPrompt),
-                generationConfig: {
-                    temperature: options?.temperature ?? 0.7,
-                    maxOutputTokens: options?.maxTokens,
-                }
-            })
+            body: JSON.stringify(this.formatRequest(messages, options))
         })
+
+        console.log(this.formatRequest(messages, options))
 
         if (!response.ok) {
             const error = await response.json()
@@ -103,38 +99,9 @@ export class GeminiProvider implements AIProvider {
         yield { content: '', done: true }
     }
 
-    private formatMessages(messages: Message[], systemPrompt?: string): any[] {
-        const contents: any[] = []
-
-        // Gemini supports system instructions separately in v1beta/models/gemini-1.5-pro-latest but 
-        // for broad compatibility we'll prepend to first user message or use system_instruction if supported.
-        // Let's use the standard contents array.
-        // Note: Gemini roles are 'user' and 'model'.
-
-        // If there is a system prompt, we can add it as a system_instruction field in the request body
-        // BUT the current implementation of chat() puts everything in body.
-        // For simplicity in this provider, we will prepend system prompt to the first user message
-        // or send it as a user message if the first message isn't user.
-
-        // Actually, let's try to use the system_instruction if we were using the latest API, 
-        // but to be safe and simple, we'll prepend.
-
-        let effectiveMessages = [...messages]
-
-        if (systemPrompt) {
-            // Prepend system prompt to the first message if it's a user message, 
-            // or insert a user message with the system prompt.
-            if (effectiveMessages.length > 0 && effectiveMessages[0].role === 'user') {
-                effectiveMessages[0] = {
-                    ...effectiveMessages[0],
-                    content: `System Instruction: ${systemPrompt}\n\n${effectiveMessages[0].content}`
-                }
-            } else {
-                effectiveMessages.unshift({ role: 'user', content: `System Instruction: ${systemPrompt}` })
-            }
-        }
-
-        for (const msg of effectiveMessages) {
+    private formatMessages(messages: Message[]): GeminiMessage[] {
+        const contents: GeminiMessage[] = []
+        for (const msg of messages) {
             // Map 'assistant' to 'model'
             const role = msg.role === 'assistant' ? 'model' : 'user'
             // Gemini doesn't like 'system' role in contents, we handled it above.
@@ -145,7 +112,19 @@ export class GeminiProvider implements AIProvider {
                 parts: [{ text: msg.content }]
             })
         }
-
         return contents
+    }
+
+    private formatRequest(messages: Message[], options?: ChatOptions): GeminiRequest {
+        return {
+            contents: this.formatMessages(messages),
+            systemInstruction: {
+                parts: [{ text: options?.systemPrompt || '' }]
+            },
+            generationConfig: {
+                temperature: options?.temperature ?? 0.7,
+                maxOutputTokens: options?.maxTokens
+            }
+        }
     }
 }

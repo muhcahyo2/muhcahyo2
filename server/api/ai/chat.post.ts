@@ -29,9 +29,11 @@ export default defineEventHandler(async (event) => {
     // enrichUserQuery returns [System, ...History, User]
     const messages = await ContextBuilder.enrichUserQuery(message, sessionId)
 
+    const systemPrompt = ContextBuilder.buildSystemPrompt(getProfileFacts())
+
     // Stream response
     // We don't pass systemPrompt in options because it's already in messages
-    const stream = ai.streamChat(messages)
+    const stream = ai.streamChat(messages, { systemPrompt })
 
     // Set headers for SSE
     setResponseHeader(event, 'Content-Type', 'text/event-stream')

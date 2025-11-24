@@ -27,3 +27,19 @@ export interface AIProvider {
     chat(messages: Message[], options?: ChatOptions): Promise<AIResponse>
     streamChat(messages: Message[], options?: ChatOptions): AsyncIterable<AIChunk>
 }
+
+export interface GeminiMessage {
+    role: 'user' | 'model';
+    parts: { text: string }[];
+}
+
+export interface GeminiRequest {
+    contents: GeminiMessage[]
+    systemInstruction?: {
+        parts: { text: string }[];
+    },
+    generationConfig: {
+        temperature: number
+        maxOutputTokens?: number
+    }
+}

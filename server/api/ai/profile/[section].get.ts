@@ -25,13 +25,12 @@ Keep it engaging and relevant to a developer portfolio.
 Do not include the heading, just the content.
 `
 
-    const messages = [
-        { role: 'system' as const, content: systemPrompt },
+    const messages: Message[] = [
         { role: 'user' as const, content: prompt }
     ]
 
     try {
-        const response = await ai.chat(messages)
+        const response = await ai.chat(messages, { systemPrompt })
         return { content: response.content }
     } catch (error: any) {
         throw createError({
