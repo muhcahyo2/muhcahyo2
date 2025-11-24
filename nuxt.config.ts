@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   modules: ['@nuxt/content', '@nuxt/image', '@nuxtjs/tailwindcss'],
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/main.css', 'highlight.js/styles/atom-one-dark.css'],
   runtimeConfig: {
     ai: {
       provider: process.env.AI_PROVIDER || 'openai',

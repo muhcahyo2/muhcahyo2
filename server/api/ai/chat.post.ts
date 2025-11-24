@@ -30,7 +30,6 @@ export default defineEventHandler(async (event) => {
     // enrichUserQuery returns [System, ...History, User]
     const messages = await ContextBuilder.enrichUserQuery(message, sessionId)
 
-    console.log('System prompt:', getProfileFacts())
     const systemPrompt = ContextBuilder.buildSystemPrompt(getProfileFacts())
 
     // Stream response
@@ -56,10 +55,23 @@ export default defineEventHandler(async (event) => {
                     }
                     if (chunk.content) {
                         fullResponse += chunk.content
-                        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: chunk.content })}\n\n`))
+                        controller.enqueue(encoder.encode(`data: ${JSON.stringify({
+                            content: chunk.content,
+                            metadata: {
+                                format: 'markdown',
+                                supportsMarkdown: true
+                            }
+                        })}\n\n`))
                     }
                 }
-                controller.enqueue(encoder.encode('data: [DONE]\n\n'))
+                controller.enqueue(encoder.encode(`data: ${JSON.stringify({
+                    type: 'done',
+                    metadata: {
+                        format: 'markdown',
+                        supportsMarkdown: true,
+                        messageLength: fullResponse.length
+                    }
+                })}\n\n`))
 
                 // Save assistant message after completion
                 addMessage(sessionId, 'assistant', fullResponse)

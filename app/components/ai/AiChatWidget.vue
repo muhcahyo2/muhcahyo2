@@ -8,6 +8,8 @@ const {
   hasMoreHistory 
 } = useAiChat()
 
+const { render } = useMarkdown()
+
 const isOpen = ref(false)
 const input = ref('')
 const messagesContainer = ref<HTMLElement | null>(null)
@@ -124,7 +126,16 @@ onMounted(() => {
               ? 'bg-indigo-600 text-white rounded-br-none' 
               : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-bl-none shadow-sm text-gray-800 dark:text-gray-200'"
           >
-            <div class="whitespace-pre-wrap">{{ msg.content }}</div>
+            <div 
+              v-if="msg.role === 'user'"
+              class="whitespace-pre-wrap markdown-content"
+              v-html="render(msg.content)"
+            ></div>
+            <div 
+              v-else
+              class="markdown-content"
+              v-html="render(msg.content)"
+            ></div>
           </div>
         </div>
 

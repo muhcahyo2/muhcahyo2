@@ -9,6 +9,8 @@ const { data, pending, error } = await useFetch(`/api/ai/profile/${props.section
   server: false,
   key: `ai-profile-${props.section}`
 })
+
+const { render } = useMarkdown()
 </script>
 
 <template>
@@ -26,7 +28,7 @@ const { data, pending, error } = await useFetch(`/api/ai/profile/${props.section
     
     <div v-else class="prose dark:prose-invert max-w-none">
       <h2 v-if="title" class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">{{ title }}</h2>
-      <div class="whitespace-pre-wrap text-gray-700 dark:text-gray-300 leading-relaxed">{{ data?.content }}</div>
+      <div class="whitespace-pre-wrap text-gray-700 dark:text-gray-300 leading-relaxed markdown-content" v-html="render(data?.content || '')"></div>
     </div>
   </div>
 </template>

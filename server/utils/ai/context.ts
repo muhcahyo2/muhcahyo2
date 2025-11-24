@@ -3,7 +3,6 @@ import type { Message } from './types'
 
 export class ContextBuilder {
     static buildSystemPrompt(facts: any[]): string {
-        console.log('Facts:', facts)
         const bio = facts.find(f => f.category === 'bio' && f.key === 'summary')?.value || ''
         const skills = facts.filter(f => f.category === 'skills').map(f => `${f.key}: ${f.value}`).join('\n')
         const projects = facts.filter(f => f.category === 'projects').map(f => `${f.key}: ${f.value}`).join('\n')
@@ -30,6 +29,13 @@ Instructions:
 - Be concise but informative
 - If you don't have information, admit it gracefully
 - Maintain a professional and friendly tone
+- Format your responses using markdown for better readability:
+  * Use **bold** for emphasis
+  * Use \`code\` for technical terms, file names, or commands
+  * Use code blocks with language tags for code examples (e.g., \`\`\`javascript)
+  * Use lists (- or 1.) for multiple items
+  * Use headings (##, ###) to structure longer responses
+  * Use links [text](url) when referencing external resources
 `
     }
 
