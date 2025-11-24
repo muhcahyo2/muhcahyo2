@@ -28,7 +28,12 @@ const { render } = useMarkdown()
     
     <div v-else class="prose dark:prose-invert max-w-none">
       <h2 v-if="title" class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">{{ title }}</h2>
-      <div class="whitespace-pre-wrap text-gray-700 dark:text-gray-300 leading-relaxed markdown-content" v-html="render(data?.content || '')"></div>
+      <ClientOnly>
+        <div class="whitespace-pre-wrap text-gray-700 dark:text-gray-300 leading-relaxed markdown-content" v-html="render(data?.content || '')"></div>
+        <template #fallback>
+          <div class="h-32 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+        </template>
+      </ClientOnly>
     </div>
   </div>
 </template>

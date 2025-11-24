@@ -22,18 +22,21 @@
           Welcome to my AI-enhanced personal website. Explore my background and skills through dynamically generated content and interactive chat.
         </p>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-        <AiProfileSection section="bio" title="About Me" />
-        <AiProfileSection section="skills" title="Technical Skills" />
-      </div>
-
-      <AiProfileSection section="projects" title="Featured Projects" class="mb-12" />
-      
-      <AiProfileSection section="experience" title="Work Experience" />
+      <LazyClientOnly>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <AiProfileSection section="bio" title="About Me" />
+          <AiProfileSection section="skills" title="Technical Skills" />
+        </div>
+  
+        <AiProfileSection section="projects" title="Featured Projects" class="mb-12" />
+        
+        <AiProfileSection section="experience" title="Work Experience" />
+      </LazyClientOnly>
     </main>
 
-    <AiChatWidget />
+    <LazyClientOnly>
+      <AiChatWidget />
+    </LazyClientOnly>
   </div>
 </template>
 
