@@ -40,8 +40,8 @@
 - [x] 6.4 Implement session management
 
 ## 7. Testing
-- [x] 7.1 Unit tests for database layer
-- [x] 7.2 Unit tests for AI client wrapper
+- [ ] 7.1 Unit tests for database layer
+- [ ] 7.2 Unit tests for AI client wrapper
 - [ ] 7.3 Component tests for UI elements
 - [ ] 7.4 Integration tests for API endpoints
 - [ ] 7.5 E2E tests for complete user flows
