@@ -85,9 +85,9 @@ describe('AI Repository', () => {
             const history = getConversationHistory('session1')
 
             expect(mockPrepare).toHaveBeenCalledWith(
-                'SELECT * FROM conversations WHERE session_id = ? ORDER BY created_at DESC LIMIT ?'
+                'SELECT * FROM conversations WHERE session_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?'
             )
-            expect(mockAll).toHaveBeenCalledWith('session1', 10)
+            expect(mockAll).toHaveBeenCalledWith('session1', 10, 0)
             // Should reverse the rows
             expect(history).toEqual(mockRows.reverse() as any)
         })

@@ -36,6 +36,10 @@ export default defineNitroPlugin(() => {
     );
   `)
 
+    // Indexes for performance
+    db.exec('CREATE INDEX IF NOT EXISTS idx_profile_facts_category ON profile_facts (category);')
+    db.exec('CREATE INDEX IF NOT EXISTS idx_conversations_session_id_created_at ON conversations (session_id, created_at);')
+
     // Seed data
     const factCount = db.prepare('SELECT COUNT(*) as count FROM profile_facts').get() as { count: number }
     if (factCount.count === 0) {

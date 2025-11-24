@@ -28,7 +28,7 @@ export const getProfileFacts = (category?: string): ProfileFact[] => {
 
     const rows = category ? stmt.all(category) : stmt.all()
 
-    return rows.map((row: any) => ({
+    return rows?.map((row: any) => ({
         ...row,
         metadata: row.metadata ? JSON.parse(row.metadata) : {}
     }))
@@ -42,12 +42,12 @@ export const addProfileFact = (category: string, key: string, value: string, met
 }
 
 // Conversations
-export const getConversationHistory = (sessionId: string, limit = 10): ChatMessage[] => {
+export const getConversationHistory = (sessionId: string, limit = 10, offset = 0): ChatMessage[] => {
     const db = useDb()
     // Get last N messages, then reverse to chronological order
     const rows = db.prepare(
-        'SELECT * FROM conversations WHERE session_id = ? ORDER BY created_at DESC LIMIT ?'
-    ).all(sessionId, limit)
+        'SELECT * FROM conversations WHERE session_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?'
+    ).all(sessionId, limit, offset)
 
     return rows.reverse() as ChatMessage[]
 }

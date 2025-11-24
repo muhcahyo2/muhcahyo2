@@ -6,13 +6,42 @@ export interface ChatMessage {
 export const useAiChat = () => {
     const messages = useState<ChatMessage[]>('chat-messages', () => [])
     const isLoading = useState('chat-loading', () => false)
+    const isLoadingHistory = useState('chat-history-loading', () => false)
     const error = useState<string | null>('chat-error', () => null)
+    const hasMoreHistory = useState('chat-has-more-history', () => true)
+
     // Initialize session ID on client side only to avoid hydration mismatch
     const sessionId = useState<string>('chat-session-id', () => '')
 
-    onMounted(() => {
+    const fetchHistory = async (limit = 15) => {
+        if (isLoadingHistory.value || !hasMoreHistory.value) return
+
+        isLoadingHistory.value = true
+        try {
+            const offset = messages.value.length
+            const response = await fetch(`/api/ai/chat/history?sessionId=${sessionId.value}&limit=${limit}&offset=${offset}`)
+            if (!response.ok) throw new Error('Failed to fetch history')
+
+            const history = await response.json()
+            if (history.length < limit) {
+                hasMoreHistory.value = false
+            }
+
+            // Prepend history to maintain chronological order
+            messages.value.unshift(...history)
+        } catch (e: any) {
+            error.value = e.message
+        } finally {
+            isLoadingHistory.value = false
+        }
+    }
+
+    onMounted(async () => {
         if (!sessionId.value) {
             sessionId.value = crypto.randomUUID()
+        }
+        if (messages.value.length === 0) {
+            await fetchHistory()
         }
     })
 
@@ -82,6 +111,7 @@ export const useAiChat = () => {
 
     const clearHistory = () => {
         messages.value = []
+        hasMoreHistory.value = true
         sessionId.value = crypto.randomUUID()
     }
 
@@ -90,6 +120,9 @@ export const useAiChat = () => {
         isLoading,
         error,
         sendMessage,
-        clearHistory
+        clearHistory,
+        fetchHistory,
+        isLoadingHistory,
+        hasMoreHistory
     }
 }

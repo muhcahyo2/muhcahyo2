@@ -1,5 +1,13 @@
 <script setup lang="ts">
-const { messages, isLoading, sendMessage } = useAiChat()
+const { 
+  messages, 
+  isLoading, 
+  sendMessage, 
+  fetchHistory, 
+  isLoadingHistory, 
+  hasMoreHistory 
+} = useAiChat()
+
 const isOpen = ref(false)
 const input = ref('')
 const messagesContainer = ref<HTMLElement | null>(null)
@@ -11,16 +19,59 @@ const handleSubmit = async () => {
   const content = input.value
   input.value = ''
   await sendMessage(content)
-}
-
-// Auto-scroll to bottom
-watch(messages, () => {
+  
+  // Scroll to bottom after sending a message
   nextTick(() => {
     if (messagesContainer.value) {
       messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
     }
   })
+}
+
+const handleLoadMore = async () => {
+  if (!messagesContainer.value) return
+  
+  const oldScrollHeight = messagesContainer.value.scrollHeight
+  await fetchHistory()
+  
+  // Keep scroll position stable after loading more messages
+  nextTick(() => {
+    if (messagesContainer.value) {
+      messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight - oldScrollHeight
+    }
+  })
+}
+
+// Auto-scroll to bottom only when new messages are added by the user or AI,
+// not when loading history.
+watch(messages, (newMessages, oldMessages) => {
+  if (!messagesContainer.value) return
+  
+  // Only auto-scroll if the new message is the last one (not history being prepended)
+  if (newMessages.length > oldMessages.length) {
+    const lastMessage = newMessages[newMessages.length - 1]
+    if (lastMessage.role === 'user' || (lastMessage.role === 'assistant' && lastMessage.content !== '')) {
+       nextTick(() => {
+        if (messagesContainer.value) {
+          messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
+        }
+      })
+    }
+  }
 }, { deep: true })
+
+onMounted(() => {
+  // When chat opens, scroll to bottom
+  watch(isOpen, (newIsOpen) => {
+    if (newIsOpen) {
+      nextTick(() => {
+        if (messagesContainer.value) {
+          messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
+        }
+      })
+    }
+  })
+})
 </script>
 
 <template>
@@ -45,7 +96,18 @@ watch(messages, () => {
 
       <!-- Messages -->
       <div ref="messagesContainer" class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-gray-800/50">
-        <div v-if="messages.length === 0" class="text-center text-gray-500 mt-8 text-sm">
+        <div v-if="hasMoreHistory" class="text-center">
+          <button 
+            @click="handleLoadMore" 
+            :disabled="isLoadingHistory"
+            class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline disabled:opacity-50"
+          >
+            <span v-if="isLoadingHistory">Loading...</span>
+            <span v-else>Load More</span>
+          </button>
+        </div>
+
+        <div v-if="messages.length === 0 && !isLoadingHistory" class="text-center text-gray-500 mt-8 text-sm">
           <p class="font-medium text-gray-900 dark:text-gray-100 mb-1">Hi! I'm an AI assistant.</p>
           <p>Ask me anything about this portfolio.</p>
         </div>

@@ -3,6 +3,7 @@ import type { Message } from './types'
 
 export class ContextBuilder {
     static buildSystemPrompt(facts: any[]): string {
+        console.log('Facts:', facts)
         const bio = facts.find(f => f.category === 'bio' && f.key === 'summary')?.value || ''
         const skills = facts.filter(f => f.category === 'skills').map(f => `${f.key}: ${f.value}`).join('\n')
         const projects = facts.filter(f => f.category === 'projects').map(f => `${f.key}: ${f.value}`).join('\n')

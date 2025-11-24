@@ -25,6 +25,8 @@ mockPrepare.mockReturnValue({
     all: mockAll
 })
 
+const mockGetProfileFacts = mock()
+
 mock.module('../../../server/utils/db', () => ({
     useDb: () => mockDb
 }))
@@ -43,7 +45,8 @@ mock.module('../../../server/utils/ai/factory', () => ({
 const mockEnrichUserQuery = mock()
 mock.module('../../../server/utils/ai/context', () => ({
     ContextBuilder: {
-        enrichUserQuery: mockEnrichUserQuery
+        enrichUserQuery: mockEnrichUserQuery,
+        buildSystemPrompt: mock(mockGetProfileFacts)
     }
 }))
 
@@ -90,7 +93,7 @@ describe('Chat API Endpoint', () => {
         expect(mockRun).toHaveBeenCalledWith('123', 'user', 'hello', 0)
 
         expect(mockEnrichUserQuery).toHaveBeenCalledWith('hello', '123')
-        expect(mockStreamChat).toHaveBeenCalledWith(mockMessages)
+        expect(mockStreamChat).toHaveBeenCalledWith(mockMessages, { systemPrompt: mockGetProfileFacts() })
         expect(global.setResponseHeader).toHaveBeenCalledWith(mockEvent, 'Content-Type', 'text/event-stream')
         expect(global.sendStream).toHaveBeenCalled()
     })
