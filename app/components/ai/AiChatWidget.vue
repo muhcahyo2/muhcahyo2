@@ -52,7 +52,7 @@ watch(messages, (newMessages, oldMessages) => {
   // Only auto-scroll if the new message is the last one (not history being prepended)
   if (newMessages.length > oldMessages.length) {
     const lastMessage = newMessages[newMessages.length - 1]
-    if (lastMessage.role === 'user' || (lastMessage.role === 'assistant' && lastMessage.content !== '')) {
+    if (lastMessage && (lastMessage.role === 'user' || (lastMessage.role === 'assistant' && lastMessage.content !== ''))) {
        nextTick(() => {
         if (messagesContainer.value) {
           messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
@@ -72,6 +72,17 @@ onMounted(() => {
         }
       })
     }
+  })
+
+  // Listen for external open chat events
+  const handleOpenChat = () => {
+    isOpen.value = true
+  }
+  window.addEventListener('open-ai-chat', handleOpenChat)
+
+  // Cleanup
+  onUnmounted(() => {
+    window.removeEventListener('open-ai-chat', handleOpenChat)
   })
 })
 </script>
