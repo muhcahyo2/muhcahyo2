@@ -10,7 +10,31 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
-  css: ['~/assets/css/main.css', 'highlight.js/styles/atom-one-dark.css'],
+  css: ['~/assets/css/main.css'],
+  content: {
+    highlight: {
+      theme: {
+        default: 'github-light',
+        dark: 'github-dark'
+      },
+      langs: [
+        'javascript',
+        'typescript',
+        'vue',
+        'css',
+        'html',
+        'bash',
+        'shell',
+        'json',
+        'yaml',
+        'markdown',
+        'python',
+        'sql',
+        'nginx',
+        'php'
+      ]
+    }
+  },
   runtimeConfig: {
     ai: {
       provider: process.env.AI_PROVIDER || 'openai',

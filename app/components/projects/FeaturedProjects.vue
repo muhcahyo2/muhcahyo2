@@ -11,11 +11,10 @@
         </p>
       </div>
 
-      <!-- Projects Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      <div v-if="featuredProjects && featuredProjects.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         <div 
           v-for="(project, index) in featuredProjects" 
-          :key="project.title"
+          :key="project.path || index"
           class="animate-scale-in"
           :style="{ animationDelay: `${index * 0.1}s` }"
         >
@@ -23,39 +22,33 @@
         </div>
       </div>
 
+      <!-- Loading State -->
+      <div v-else class="text-center py-12">
+        <p class="text-gray-600 dark:text-gray-400">Loading projects...</p>
+      </div>
+
       <!-- Additional Note -->
       <div class="text-center">
-        <div class="inline-flex items-center gap-2 px-6 py-3 glass rounded-full">
+        <NuxtLink 
+          to="/projects"
+          class="inline-flex items-center gap-2 px-6 py-3 glass hover:glass-heavy rounded-full transition-all"
+        >
           <span class="text-xl">💡</span>
-          <span class="text-sm text-gray-700 dark:text-gray-300">
-            More projects coming soon! Follow my 
-            <a href="https://github.com" target="_blank" class="font-semibold text-primary-600 dark:text-primary-400 hover:underline">GitHub</a>
+          <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">
+            View All Projects
           </span>
-        </div>
+        </NuxtLink>
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-const featuredProjects = [
-  {
-    title: 'Smart Finance Tracker with AI',
-    icon: '💰',
-    description: 'Aplikasi pencatat keuangan microservice. Backend menggunakan Go Fiber untuk performa tinggi, dibungkus dalam container Docker. Menggunakan AI untuk kategorisasi otomatis transaksi dan insights keuangan.',
-    tags: ['Go', 'Vue 3', 'Docker', 'AI Integration', 'Microservices'],
-    status: 'In Progress',
-    githubUrl: 'https://github.com/yourusername/money-tracker',
-    detailUrl: '/blog/money-tracker-project',
-  },
-  {
-    title: 'Legacy PHP Optimization',
-    icon: '⚙️',
-    description: 'Modernisasi aplikasi PHP konvensional dengan implementasi Docker untuk mempermudah deployment dan isolasi environment. Implementasi route caching meningkatkan performa hingga 65%.',
-    tags: ['PHP 8', 'Slim Framework', 'Docker', 'Nginx', 'Performance'],
-    status: 'Completed',
-    githubUrl: 'https://github.com/yourusername/legacy-php-optimization',
-    detailUrl: '/blog/route-caching-slim',
-  },
-]
+// Query featured projects from content collection
+const { data: featuredProjects } = await useAsyncData('featured-projects', async () => {
+  const projects = await queryCollection('projects').all()
+  
+  // Filter featured projects
+  return projects.filter((p: any) => p.featured === true)
+})
 </script>

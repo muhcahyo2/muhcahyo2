@@ -1,4 +1,5 @@
 import { getProfileFacts, getConversationHistory } from '../ai-repository'
+import { getContentByType } from '../content-indexer'
 import type { Message } from './types'
 
 export class ContextBuilder {
@@ -7,6 +8,16 @@ export class ContextBuilder {
         const skills = facts.filter(f => f.category === 'skills').map(f => `${f.key}: ${f.value}`).join('\n')
         const projects = facts.filter(f => f.category === 'projects').map(f => `${f.key}: ${f.value}`).join('\n')
         const experience = facts.filter(f => f.category === 'experience').map(f => `${f.key}: ${f.value}`).join('\n')
+
+        // Get website content for AI knowledge
+        const blogPosts = getContentByType('blog')
+        const projectsContent = getContentByType('project')
+
+        const blogList = blogPosts.map(b => `- ${b.title}: ${b.description}`).join('\n')
+        const projectsList = projectsContent.map(p => {
+            const techList = Array.isArray(p.tags) ? p.tags.join(', ') : p.tags
+            return `- ${p.title}: ${p.description} (Tech: ${techList})`
+        }).join('\n')
 
         return `
 You are an AI assistant representing the profile owner.
@@ -23,9 +34,16 @@ ${projects}
 Experience:
 ${experience}
 
+Website Content - Blog Posts:
+${blogList || 'No blog posts yet.'}
+
+Website Content - Projects:
+${projectsList || 'No projects yet.'}
+
 Instructions:
-- Answer questions about the profile owner's background, skills, and projects
+- Answer questions about the profile owner's background, skills, projects, and blog posts
 - Use first-person perspective ("I", "my") as if you are the profile owner
+- When asked about blog posts or projects, reference the specific content from the website
 - Be concise but informative
 - If you don't have information, admit it gracefully
 - Maintain a professional and friendly tone

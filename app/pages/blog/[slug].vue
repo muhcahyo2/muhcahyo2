@@ -65,6 +65,9 @@
         </footer>
       </article>
 
+      <!-- Related Posts Section -->
+      <RelatedPosts v-if="data" :current-post="data" />
+
       <!-- Loading State -->
       <div v-else class="text-center py-20">
         <p class="text-gray-600 dark:text-gray-400">Loading article...</p>
