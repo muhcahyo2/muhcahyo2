@@ -16,7 +16,7 @@ COPY . .
 RUN bun run build
 
 # Stage 2: Production
-FROM node:25.2-slim
+FROM node:lts-slim
 
 WORKDIR /app
 
