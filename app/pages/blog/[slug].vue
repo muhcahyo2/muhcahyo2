@@ -85,17 +85,13 @@ const slug = route.params.slug as string
 const { data, error, pending } = await useAsyncData(`blog-${slug}`, async () => {
   try {
     const all = await queryCollection('blog').all()
-    console.log('All blog posts:', all)
     const result = await queryCollection('blog').path(`/blog/${slug}`).first()
-    console.log('Querying blog:', slug, 'Result:', result)
     return result
   } catch (err) {
     console.error('Content query error:', err)
     throw err
   }
 })
-
-console.log('Blog data:', data.value)
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString)

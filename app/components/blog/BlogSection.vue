@@ -73,8 +73,6 @@
 
 const { data: articles } = await useAsyncData('blog', () => queryCollection('blog').all())
 
-console.log('Blog data:', articles.value)
-
 const formatDate = (dateString: string) => {
   const date = new Date(dateString)
   return date.toLocaleDateString('id-ID', { 

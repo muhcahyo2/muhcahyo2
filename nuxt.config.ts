@@ -12,27 +12,32 @@ export default defineNuxtConfig({
   ],
   css: ['~/assets/css/main.css'],
   content: {
-    highlight: {
-      theme: {
-        default: 'github-light',
-        dark: 'github-dark'
-      },
-      langs: [
-        'javascript',
-        'typescript',
-        'vue',
-        'css',
-        'html',
-        'bash',
-        'shell',
-        'json',
-        'yaml',
-        'markdown',
-        'python',
-        'sql',
-        'nginx',
-        'php'
-      ]
+    database: {
+      type: 'sqlite',
+      filename: 'sqlite.db'
+    },
+    build: {
+      markdown: {
+        highlight: {
+          theme: 'github-dark',
+          langs: [
+            'javascript',
+            'typescript',
+            'vue',
+            'css',
+            'html',
+            'bash',
+            'shell',
+            'json',
+            'yaml',
+            'markdown',
+            'python',
+            'sql',
+            'nginx',
+            'php'
+          ]
+        }
+      }
     }
   },
   runtimeConfig: {
