@@ -37,7 +37,7 @@
       <!-- Learning Section -->
       <div class="mt-12 text-center">
         <div class="inline-flex items-center gap-2 px-6 py-3 glass rounded-full">
-          <span class="text-2xl">🚀</span>
+          <Icon name="mdi:rocket-launch" class="text-2xl text-primary-600 dark:text-primary-400" />
           <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
             Currently Learning: <span class="font-bold text-primary-600 dark:text-primary-400">Go (Golang)</span> & 
             <span class="font-bold text-secondary-600 dark:text-secondary-400">AI Integration</span>
@@ -52,19 +52,19 @@
 const backendTech = [
   {
     name: 'PHP 7/8',
-    icon: '🐘',
+    icon: 'logos:php',
     category: 'Backend',
     description: 'Core language'
   },
   {
     name: 'Slim Framework',
-    icon: '⚡',
+    icon: 'devicon:slim',
     category: 'Backend',
     description: 'Micro framework'
   },
   {
     name: 'Go (Learning)',
-    icon: '🔵',
+    icon: 'logos:go',
     category: 'Backend',
     description: 'Modern backend'
   },
@@ -73,19 +73,19 @@ const backendTech = [
 const frontendTech = [
   {
     name: 'Vue.js',
-    icon: '💚',
+    icon: 'logos:vue',
     category: 'Frontend',
     description: 'Progressive framework'
   },
   {
     name: 'Nuxt',
-    icon: '🟢',
+    icon: 'logos:nuxt-icon',
     category: 'Frontend',
     description: 'Vue meta-framework'
   },
   {
     name: 'Tailwind CSS',
-    icon: '🎨',
+    icon: 'logos:tailwindcss-icon',
     category: 'Frontend',
     description: 'Utility-first CSS'
   },
@@ -94,25 +94,25 @@ const frontendTech = [
 const infrastructureTech = [
   {
     name: 'Docker',
-    icon: '🐳',
+    icon: 'logos:docker-icon',
     category: 'Infrastructure',
     description: 'Containerization'
   },
   {
     name: 'Ubuntu Server',
-    icon: '🖥️',
+    icon: 'logos:ubuntu',
     category: 'Infrastructure',
     description: 'Linux server'
   },
   {
     name: 'Nginx',
-    icon: '⚙️',
+    icon: 'logos:nginx',
     category: 'Infrastructure',
     description: 'Web server'
   },
   {
     name: 'Bun',
-    icon: '🥟',
+    icon: 'logos:bun',
     category: 'Infrastructure',
     description: 'Fast runtime'
   },
@@ -121,19 +121,19 @@ const infrastructureTech = [
 const toolsTech = [
   {
     name: 'Git',
-    icon: '📦',
+    icon: 'logos:git-icon',
     category: 'Tools',
     description: 'Version control'
   },
   {
     name: 'VS Code',
-    icon: '💻',
+    icon: 'logos:visual-studio-code',
     category: 'Tools',
     description: 'Code editor'
   },
   {
     name: 'Postman',
-    icon: '📮',
+    icon: 'logos:postman-icon',
     category: 'Tools',
     description: 'API testing'
   },

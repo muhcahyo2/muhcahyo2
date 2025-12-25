@@ -3,7 +3,7 @@
     <div class="flex flex-col items-center text-center space-y-3">
       <!-- Icon/Emoji -->
       <div class="text-5xl group-hover:scale-110 transition-transform duration-300">
-        {{ tech.icon }}
+        <Icon :name="tech.icon" size="1em" />
       </div>
       
       <!-- Tech Name -->

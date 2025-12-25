@@ -3,8 +3,19 @@
     <!-- Header -->
     <header class="bg-white dark:bg-gray-900 shadow-sm sticky top-0 z-40 backdrop-blur-md bg-opacity-90 dark:bg-opacity-90">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <NuxtLink to="/" class="text-xl font-bold gradient-text">
-          ← Back to Home
+        <!-- Terminal Logo -->
+        <NuxtLink to="/" class="terminal-logo group">
+          <span class="text-xl font-mono font-bold text-orange-500 dark:text-orange-400">&gt;_</span>
+          <span class="text-xl font-mono font-bold text-gray-900 dark:text-white">JTC</span>
+          <span class="terminal-cursor"></span>
+        </NuxtLink>
+        
+        <!-- Back Button -->
+        <NuxtLink to="/" class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Home
         </NuxtLink>
       </div>
     </header>
@@ -171,5 +182,20 @@ useHead({
 
 .prose blockquote {
   @apply border-l-4 border-primary-500 pl-6 italic my-6 text-gray-700 dark:text-gray-300;
+}
+
+/* Terminal Logo Styles */
+.terminal-logo {
+  @apply flex items-center no-underline;
+}
+
+.terminal-cursor {
+  @apply inline-block w-2 h-5 bg-orange-500 dark:bg-orange-400 ml-0.5;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 </style>

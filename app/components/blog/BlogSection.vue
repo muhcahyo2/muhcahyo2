@@ -13,9 +13,10 @@
 
       <!-- Blog Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div 
+        <NuxtLink 
           v-for="(article, index) in articles" 
           :key="article.path"
+          :to="`${article.path}`"
           class="group bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden hover-lift animate-scale-in"
           :style="{ animationDelay: `${index * 0.1}s` }"
         >
@@ -44,7 +45,7 @@
 
             <!-- Excerpt -->
             <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3">
-              {{ article.excerpt }}
+              {{ article.excerpt || '' }}
             </p>
 
             <!-- Meta & CTA -->
@@ -63,7 +64,7 @@
               </NuxtLink>
             </div>
           </div>
-        </div>
+        </NuxtLink>
       </div>
     </div>
   </section>

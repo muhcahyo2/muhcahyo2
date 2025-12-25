@@ -1,5 +1,35 @@
 <template>
   <div>
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <!-- Terminal Logo -->
+        <a href="#" class="terminal-logo group" @click.prevent="scrollToTop">
+          <span class="text-xl font-mono font-bold text-orange-500 dark:text-orange-400">&gt;_</span>
+          <span class="text-xl font-mono font-bold text-gray-900 dark:text-white">JTC</span>
+          <span class="terminal-cursor"></span>
+        </a>
+        
+        <!-- Navigation Links -->
+        <div class="flex items-center gap-6">
+          <a href="#tech-stack" class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            Tech Stack
+          </a>
+          <a href="#blog" class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            Blog
+          </a>
+          <a 
+            href="https://github.com/muhcahyo2" 
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+          >
+            GitHub
+          </a>
+        </div>
+      </div>
+    </nav>
+
     <!-- Hero Section -->
     <HeroSection />
 
@@ -7,7 +37,7 @@
     <TechStack />
 
     <!-- Featured Projects Section -->
-    <FeaturedProjects />
+    <!-- <FeaturedProjects /> -->
 
     <!-- AI Chat Promotional Section -->
     <AiChatSection />
@@ -60,7 +90,7 @@
             </h3>
             <div class="flex gap-4">
               <a 
-                href="https://github.com" 
+                href="https://github.com/muhcahyo2" 
                 target="_blank"
                 rel="noopener noreferrer"
                 class="w-10 h-10 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-500 hover:text-white transition-all hover:scale-110"
@@ -71,7 +101,7 @@
                 </svg>
               </a>
               <a 
-                href="https://linkedin.com" 
+                href="https://www.linkedin.com/in/muh-joko-tri-cahyo-182aba163" 
                 target="_blank"
                 rel="noopener noreferrer"
                 class="w-10 h-10 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-500 hover:text-white transition-all hover:scale-110"
@@ -82,7 +112,7 @@
                 </svg>
               </a>
               <a 
-                href="mailto:your.email@example.com"
+                href="mailto:jokotricahyo129@gmail.com"
                 class="w-10 h-10 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-500 hover:text-white transition-all hover:scale-110"
                 aria-label="Email"
               >
@@ -97,7 +127,7 @@
         <!-- Copyright -->
         <div class="border-t border-gray-200 dark:border-gray-800 pt-8 text-center">
           <p class="text-sm text-gray-600 dark:text-gray-400">
-            © {{ new Date().getFullYear() }} Your Name. Built with 
+            © {{ new Date().getFullYear() }} Joko Tri Cahyo. Built with 
             <span class="text-red-500">❤️</span> using 
             <span class="font-semibold text-primary-600 dark:text-primary-400">Nuxt</span>,
             <span class="font-semibold text-secondary-600 dark:text-secondary-400">Vue</span>, and
@@ -110,15 +140,37 @@
 </template>
 
 <script setup lang="ts">
+// Scroll to top function
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
 // SEO Meta tags
 useHead({
-  title: 'Your Name - Fullstack Developer | PHP & Go Enthusiast',
+  title: 'Joko Tri Cahyo - Fullstack Developer | PHP & Go Enthusiast',
   meta: [
     { name: 'description', content: 'Fullstack Developer specializing in PHP, Go, Vue.js, and DevOps. Building scalable web applications with modern infrastructure.' },
     { name: 'keywords', content: 'Fullstack Developer, PHP, Go, Golang, Vue.js, Nuxt, Docker, DevOps, Web Development' },
-    { property: 'og:title', content: 'Your Name - Fullstack Developer' },
+    { property: 'og:title', content: 'Joko Tri Cahyo - Fullstack Developer' },
     { property: 'og:description', content: 'Building scalable web applications with modern tech stack' },
     { property: 'og:type', content: 'website' },
   ],
 })
 </script>
+
+<style scoped>
+/* Terminal Logo Styles */
+.terminal-logo {
+  @apply flex items-center no-underline;
+}
+
+.terminal-cursor {
+  @apply inline-block w-2 h-5 bg-orange-500 dark:bg-orange-400 ml-0.5;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+</style>
