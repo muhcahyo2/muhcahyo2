@@ -36,7 +36,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: personal-web # Ensure this matches your Cloudflare Pages project name
+          projectName: muhcahyo2 # Ensure this matches your Cloudflare Pages project name
           directory: .output/public
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           # Optional: Enable if you want to use the branch name as the deployment environment
