@@ -5,7 +5,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxt/content', '@nuxt/image', '@nuxtjs/tailwindcss', '@nuxt/icon'],
   nitro: {
-    preset: 'cloudflare-pages'
+    // preset: 'cloudflare-pages'
+    preset: 'static'
   },
   app: {
     head: {
