@@ -3,7 +3,8 @@
     <div class="flex flex-col items-center text-center space-y-3">
       <!-- Icon/Emoji -->
       <div class="text-5xl group-hover:scale-110 transition-transform duration-300">
-        <Icon :name="tech.icon" size="1em" />
+        <img v-if="tech.icon.includes('.') || tech.icon.startsWith('/')" :src="tech.icon" :alt="tech.name" class="w-[1em] h-[1em] object-contain" />
+        <Icon v-else :name="tech.icon" size="1em" />
       </div>
       
       <!-- Tech Name -->

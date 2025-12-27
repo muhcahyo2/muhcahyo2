@@ -4,6 +4,13 @@ export default defineNuxtConfig({
   srcDir: 'app',
   devtools: { enabled: true },
   modules: ['@nuxt/content', '@nuxt/image', '@nuxtjs/tailwindcss', '@nuxt/icon'],
+  app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
+      ]
+    }
+  },
   components: [
     {
       path: '~/components',

@@ -58,7 +58,7 @@ const backendTech = [
   },
   {
     name: 'Slim Framework',
-    icon: 'devicon:slim',
+    icon: 'https://www.slimframework.com/assets/images/favicon.png',
     category: 'Backend',
     description: 'Micro framework'
   },

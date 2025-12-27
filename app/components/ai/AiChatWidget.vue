@@ -145,8 +145,14 @@ onMounted(() => {
             <div 
               v-else
               class="markdown-content"
-              v-html="render(msg.content)"
-            ></div>
+            >
+              <span v-html="render(msg.content)"></span>
+              <!-- Blinking cursor while typing -->
+              <span 
+                v-if="isLoading && idx === messages.length - 1 && msg.content"
+                class="typing-cursor"
+              >▊</span>
+            </div>
           </div>
         </div>
 
@@ -196,3 +202,19 @@ onMounted(() => {
     </button>
   </div>
 </template>
+
+<style scoped>
+/* Blinking cursor animation for typing effect */
+.typing-cursor {
+  display: inline-block;
+  color: #6366f1;
+  animation: cursor-blink 0.8s step-end infinite;
+  margin-left: 1px;
+  font-weight: normal;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+</style>

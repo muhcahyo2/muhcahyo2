@@ -37,10 +37,10 @@
     <TechStack />
 
     <!-- Featured Projects Section -->
-    <!-- <FeaturedProjects /> -->
+    <FeaturedProjects />
 
     <!-- AI Chat Promotional Section -->
-    <AiChatSection />
+    <!-- <AiChatSection /> -->
 
     <!-- Blog Section -->
     <BlogSection />
@@ -150,7 +150,6 @@ useHead({
   title: 'Joko Tri Cahyo - Fullstack Developer | PHP & Go Enthusiast',
   meta: [
     { name: 'description', content: 'Fullstack Developer specializing in PHP, Go, Vue.js, and DevOps. Building scalable web applications with modern infrastructure.' },
-    { name: 'keywords', content: 'Fullstack Developer, PHP, Go, Golang, Vue.js, Nuxt, Docker, DevOps, Web Development' },
     { property: 'og:title', content: 'Joko Tri Cahyo - Fullstack Developer' },
     { property: 'og:description', content: 'Building scalable web applications with modern tech stack' },
     { property: 'og:type', content: 'website' },

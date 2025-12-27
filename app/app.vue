@@ -4,9 +4,9 @@
     <NuxtPage />
 
     <!-- AI Chat Widget (Global) -->
-    <LazyClientOnly>
-      <AiChatWidget />
-    </LazyClientOnly>
+    <!-- <LazyClientOnly> -->
+      <!-- <AiChatWidget /> -->
+    <!-- </LazyClientOnly> -->
   </div>
 </template>
 

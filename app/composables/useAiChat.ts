@@ -57,6 +57,30 @@ export const useAiChat = () => {
         // Placeholder for assistant message
         const assistantMessageIndex = messages.value.push({ role: 'assistant', content: '' }) - 1
 
+        // Typing effect configuration
+        const typingDelay = 15 // milliseconds between each character
+        let pendingText = ''
+        let isTyping = false
+
+        // Function to type out pending text character by character
+        const typeNextChar = async () => {
+            if (isTyping) return
+            isTyping = true
+
+            while (pendingText.length > 0) {
+                const char = pendingText[0]
+                pendingText = pendingText.slice(1)
+                const msg = messages.value[assistantMessageIndex]
+                if (msg) msg.content += char
+
+                // Vary delay slightly for more natural feel
+                const delay = char === ' ' ? typingDelay * 0.5 : typingDelay
+                await new Promise(resolve => setTimeout(resolve, delay))
+            }
+
+            isTyping = false
+        }
+
         try {
             const response = await fetch('/api/ai/chat', {
                 method: 'POST',
@@ -90,7 +114,9 @@ export const useAiChat = () => {
                         try {
                             const parsed = JSON.parse(data)
                             if (parsed.content) {
-                                messages.value[assistantMessageIndex].content += parsed.content
+                                // Add to pending text and start typing
+                                pendingText += parsed.content
+                                typeNextChar()
                             }
                             if (parsed.error) {
                                 throw new Error(parsed.error)
@@ -101,13 +127,20 @@ export const useAiChat = () => {
                     }
                 }
             }
+
+            // Wait for remaining text to be typed out
+            while (pendingText.length > 0 || isTyping) {
+                await new Promise(resolve => setTimeout(resolve, 50))
+            }
         } catch (e: any) {
             error.value = e.message
-            messages.value[assistantMessageIndex].content += '\n\n[Error: ' + e.message + ']'
+            const msg = messages.value[assistantMessageIndex]
+            if (msg) msg.content += '\n\n[Error: ' + e.message + ']'
         } finally {
             isLoading.value = false
         }
     }
+
 
     const clearHistory = () => {
         messages.value = []

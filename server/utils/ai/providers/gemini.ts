@@ -19,13 +19,7 @@ export class GeminiProvider implements AIProvider {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                contents: this.formatMessages(messages, options?.systemPrompt),
-                generationConfig: {
-                    temperature: options?.temperature ?? 0.7,
-                    maxOutputTokens: options?.maxTokens,
-                }
-            })
+            body: JSON.stringify(this.formatRequest(messages, options))
         })
 
         if (!response.ok) {
@@ -56,8 +50,6 @@ export class GeminiProvider implements AIProvider {
             },
             body: JSON.stringify(this.formatRequest(messages, options))
         })
-
-        console.log(this.formatRequest(messages, options))
 
         if (!response.ok) {
             const error = await response.json()

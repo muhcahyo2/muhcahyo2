@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Background -->
+  <rect width="64" height="64" rx="8" fill="#1a1a2e"/>
+  
+  <!-- Terminal prompt ">_" in orange -->
+  <text x="4" y="42" font-family="monospace, 'Courier New'" font-size="20" font-weight="bold" fill="#f97316">&gt;_</text>
+  
+  <!-- "JTC" text in white -->
+  <text x="28" y="42" font-family="monospace, 'Courier New'" font-size="20" font-weight="bold" fill="#ffffff">JTC</text>
+</svg>
