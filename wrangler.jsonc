@@ -1,0 +1,10 @@
+{
+	"name": "muhcahyo2",
+	"compatibility_date": "2025-12-25",
+	"assets": {
+		"directory": "./.output/public"
+	},
+	"observability": {
+		"enabled": true
+	}
+}
