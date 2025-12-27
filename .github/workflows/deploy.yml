@@ -31,13 +31,19 @@ jobs:
           # NUXT_APP_CDN_URL: ${{ secrets.NUXT_APP_CDN_URL }}
           NODE_ENV: production
 
+      - name: Verify build output
+        run: |
+          ls -la .output || true
+          ls -la .output/public || true
+          ls -la dist || true
+
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: muhcahyo2 # Ensure this matches your Cloudflare Pages project name
-          directory: .output/public
+          directory: dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           # Optional: Enable if you want to use the branch name as the deployment environment
           # branch: main
