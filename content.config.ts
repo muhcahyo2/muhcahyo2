@@ -27,7 +27,8 @@ export default defineContentConfig({
                 demo: z.string().optional(),
                 featured: z.boolean().default(false),
                 status: z.enum(['completed', 'in-progress', 'planned']).default('completed'),
-                year: z.number().optional()
+                year: z.number().optional(),
+                caseStudy: z.string().optional()
             })
         })
     }

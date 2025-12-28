@@ -51,7 +51,7 @@
 <script setup lang="ts">
 const backendTech = [
   {
-    name: 'PHP 7/8',
+    name: 'PHP',
     icon: 'logos:php',
     category: 'Backend',
     description: 'Core language'

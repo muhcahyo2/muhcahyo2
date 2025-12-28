@@ -6,12 +6,12 @@
         <h2 class="text-4xl sm:text-5xl font-display font-extrabold mb-4">
           <span class="gradient-text">Featured Projects</span>
         </h2>
-        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        <!-- <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
           Showcase projek-projek terbaik yang mendemonstrasikan kemampuan fullstack dan DevOps
-        </p>
+        </p> -->
       </div>
 
-      <div v-if="featuredProjects && featuredProjects.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      <div v-if="featuredProjects && featuredProjects.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
         <div 
           v-for="(project, index) in featuredProjects" 
           :key="project.path || index"
